@@ -33,12 +33,12 @@ connection.onclose = () => {
   console.log("leaving so soon? :(")
 }
 
-connection.onerror => (error) => {
+connection.onerror = (error) => {
   console.log("well, this is awkward");
   console.log(error);
 }
 
-connection.onmessage => (event) => {
+connection.onmessage = (event) => {
   console.log("Now we're getting to the serious stuff!")
   console.log(event.data);
   // do whatever you like here :D
