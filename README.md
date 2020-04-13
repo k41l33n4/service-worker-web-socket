@@ -9,6 +9,8 @@
 
 ## Install
 ```
+npm config set registry https://npm.pkg.github.com/k41l33n4
+
 npm i -S @k41l33n4/service-worker-web-socket@latest
 ```
 
