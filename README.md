@@ -46,10 +46,12 @@ connection.onmessage => (event) => {
 
 ```
 
-## Note
+## Notes
 
-Service workers are only enabled for `https`; For testing and development, you also have service workers enabled on `http://localhost`, any port;
+1. Service workers are only enabled for `https`; For testing and development, you also have service workers enabled on `http://localhost`, any port;
 
-If you don't have `https` enabled on your server, or cannot access your app on `http://locahost`, it will fallback to a native WebSocket implementation;
+2. If you don't have `https` enabled on your server, or cannot access your app on `http://locahost`, it will fallback to a native WebSocket implementation;
 
-If, for any reasons, the service worker registration fails, it will fallback to a native WebSocket implementation
+3. If, for any reasons, the service worker registration fails, it will fallback to a native WebSocket implementation
+
+4. You will probably need to add the package to you compiler build paths
