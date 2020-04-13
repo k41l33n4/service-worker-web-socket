@@ -2,7 +2,7 @@ const NativeWebSocket = window.WebSocket || window.MozWebSocket;
 const SW = "serviceWorker" in navigator;
 
 
-const WORKER_URL = "/serviceWorker.js";
+const WORKER_URL = "/serviceasdWorker.js";
 
 
 class ServiceWorkerWebSocket {
@@ -35,18 +35,22 @@ class ServiceWorkerWebSocket {
 
   async connectToWorker() {
     this.readyState = ServiceWorkerWebSocket.CONNECTING;
-    this.swReg = await navigator.serviceWorker.register(WORKER_URL);
-    await navigator.serviceWorker.ready;
-    navigator.serviceWorker.addEventListener("message", this.onWorkerMessage);
+    try {
+      this.swReg = await navigator.serviceWorker.register(WORKER_URL);
+      await navigator.serviceWorker.ready;
+      navigator.serviceWorker.addEventListener("message", this.onWorkerMessage);
 
-    const message = {
-      type: "connect",
-      options: {
-        url: this.url,
-        protocols: this.protocols
-      },
-    };
-    this.swReg.active.postMessage(message);
+      const message = {
+        type: "connect",
+        options: {
+          url: this.url,
+          protocols: this.protocols
+        },
+      };
+      this.swReg.active.postMessage(message);
+    } catch {
+      this.connectToWebSocket();
+    }
   }
 
   async send(data) {
@@ -54,6 +58,7 @@ class ServiceWorkerWebSocket {
       this.webSocket.send(data);
       return;
     }
+    
     const message = {
       type: "send",
       data,
@@ -63,6 +68,7 @@ class ServiceWorkerWebSocket {
   }
 
   connectToWebSocket = () => {
+    this.readyState = ServiceWorkerWebSocket.CONNECTING;
     this.webSocket = new NativeWebSocket(this.url, this.protocols);
     this.webSocket.onopen = () => {
       this.readyState = ServiceWorkerWebSocket.OPEN;
