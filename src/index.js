@@ -48,6 +48,10 @@ class ServiceWorkerWebSocket {
         },
       };
       this.swReg.active.postMessage(message);
+
+      window.addEventListener("beforeunload", () => {
+        this.swReg.active.postMessage({ type: "disconnect" });
+      });
     } catch {
       this.connectToWebSocket();
     }
@@ -58,7 +62,7 @@ class ServiceWorkerWebSocket {
       this.webSocket.send(data);
       return;
     }
-    
+
     const message = {
       type: "send",
       data,
