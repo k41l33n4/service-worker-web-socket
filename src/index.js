@@ -2,7 +2,7 @@ const NativeWebSocket = window.WebSocket || window.MozWebSocket;
 const SW = "serviceWorker" in navigator;
 
 
-const WORKER_URL = "/serviceasdWorker.js";
+const WORKER_URL = "/serviceWorker.js";
 
 
 class ServiceWorkerWebSocket {
